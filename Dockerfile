@@ -1,0 +1,9 @@
+FROM python:3.8.3-slim-buster
+WORKDIR /app
+COPY requirements.txt .
+RUN python -m pip install --upgrade pip
+RUN pip install PyMySQL
+RUN pip install -r requirements.txt
+RUN pip install requests PyMySQL 'SQLAlchemy<1.4'
+COPY . .
+CMD ["python", "app.py"]
