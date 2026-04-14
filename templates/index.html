@@ -1,26 +1,42 @@
 {% extends 'base.html' %}
 {% block head %}
-<title>Todo app</title>
+<title>Todo app with AI</title>
 {% endblock %}
 
 {% block body %}
-<h1>Todo app</h1>
+<h1>My AI Todo List </h1>
+
 <div class="box">
-    <form action="/add" method="post">
-        <label for="title">Todo title</label>
-        <input type="text" name="title" placeholder="What needs to be done?"><br>
-        <button type="submit">Add</button>
+
+    <form action="/add" method="post" style="margin-bottom: 20px;">
+        <label for="title">משימה חדשה:</label>
+        <input type="text" name="title" placeholder="מה צריך לעשות?">
+        <button type="submit">הוסף </button>
     </form>
 
+    <hr>
+
+
     {% for todo in list_todo %}
-        <p>{{ todo.id }} | {{ todo.title }}</p>
-        {% if todo.complete %}
-        <span>Complete</span>
-        {% else %}
-            <span>Not complete</span>
-        {% endif %}
-        <a href="/update/{{ todo.id }}">Update</a>
-        <a href="/delete/{{ todo.id }}">Delete</a>
+        <div style="margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+            <p>
+                <strong>#{{ todo.title }}</strong>
+                {% if todo.complete %}
+                    <span style="color: green;">(בוצע ✅)</span>
+                {% else %}
+                    <span style="color: red;">(בתהליך ⏳)</span>
+                {% endif %}
+            </p>
+
+
+            <p style="color: #555; font-style: italic; background-color: #f9f9f9; padding: 5px; border-right: 3px solid #007bff;">
+                💡 {{ todo.motivation }}
+            </p>
+            
+
+            <a href="/update/{{ todo.id }}">בצע/בטל</a> | 
+            <a href="/delete/{{ todo.id }}" style="color: red;">מחק משימה</a>
+        </div>
     {% endfor %}
 </div>
 {% endblock %}
